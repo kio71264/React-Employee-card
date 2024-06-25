@@ -1,17 +1,24 @@
-import React, {useState} from 'react';
-import { Button } from 'react-bootstrap'; 
+import React, { useState, useEffect } from 'react';
 
 const DateUpdater = () => {
-  const [date, setDate] = useState (new Date ().toString());
-  const updateDate = () => {
-    setDate(new Date().toString())
-  };
+  const [date, setDate] = useState(new Date().toString());
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setDate(new Date().toString());
+    }, 1000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
+
   return (
     <div>
       <p className='dateDisplay'>{date}</p>
-      <Button variant="secondary" onClick={updateDate}>Reset</Button>
     </div>
   );
 }
 
 export default DateUpdater;
+
